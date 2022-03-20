@@ -1,0 +1,12 @@
+/********************************/
+        Javascript Modular
+/********************************/
+
+1- To split javascript code into a module:
+
+        step one:  add a script with the module type as the code below
+        <script type="module" source="main.js" ></script>
+
+        stept two: import javascript file into the main js file
+        Example: 
+        import { guessName } from "./modules/carafe.js";
