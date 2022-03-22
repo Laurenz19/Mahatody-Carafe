@@ -6,11 +6,49 @@
     <title>Carafe</title>
     <!--This will fix the favicon not found-->
     <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="./assets/css/index.css">
     <!--JQuery-->
     <script src="./assets/js/plugins/jquery.3.2.1.min.js"></script>
     <script type="module" src="./assets/js/main.js"></script>
 </head>
 <body>
+
+    <header>
+        Projet Carafe
+    </header>
+    <main>
+       <div id="setting">
+           <input type="number" name="carafe1" id="carafe1" placeholder="Carafe n°1" min="0" max="10">
+           <input type="number" name="carafe2" id="carafe2" placeholder="Carafe N°2" min="0" max="10">
+           <input type="number" name="gallons" id="gallons" placeholder="Nb Gallons" min="0" max="10">
+           <button id="start">Lancer!</button>
+           <button id="stop">Stop</button>
+           <button id="test">Test</button>
+       </div>
+       <div id="event">
+           <div class="info">
+            <script id="template-event-info" type="text/template">
+                On a deux carafes non Graduée, dont la première a {{Carafe1_NbGallons}} Gallons et la seconde
+                a {{Carafe2_NbGallons}} Gallons. L'Objectif est d'obtenir {{nb}} Gallons dans la première Carafe.
+            </script>
+           </div>
+           <div class="actions">
+
+           </div>
+        
+       </div>
+        <div class="content">
+            <div class="carafe carafe1">
+              
+            </div>
+            <div class="carafe carafe2">
+                
+            </div>
+        </div>
+    </main>
+    <footer>
+        Fait avec passion par Sambany Michel Laurenzio - Année universitaire 2020 - 2021
+    </footer>
     
     
 </body>

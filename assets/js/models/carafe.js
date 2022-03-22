@@ -1,13 +1,14 @@
 export default class Carafe{
     #remainGallon
     #volume
-
+    #className
     /**
      * Constructor
      */
-    constructor(valueGallon){
+    constructor(valueGallon, className){
         this.#remainGallon = 0
         this.#volume = valueGallon
+        this.#className = className
     }
 
     //Getters and setters
@@ -27,14 +28,24 @@ export default class Carafe{
         this.#volume = valueGallon 
     }
 
+    getClassName(){
+        return this.#className
+    }
+
+    setClassName(className){
+        this.#className = className
+    }
+
     remplir(){
         this.#remainGallon = this.#volume
         console.log(`(Remplir)=> le Carafe ${this.#volume} est rempli`)
+        return {type:"remplir", carafe:this}  
     }
 
     vider(){
         this.#remainGallon = 0
         console.log(`(Vider)=> le Carafe ${this.#volume} est vidé`)
+        return {type:"vider", carafe:this}  
     }
 
     estVide(){
@@ -54,10 +65,10 @@ export default class Carafe{
     transvaser(carafe){
         const gallonsR = this.#remainGallon
         console.log(`(transvaser)=> Le carafe avec ${carafe.getVolume()}G transvasé dans le carafe ${this.#volume}G`)
-        
+       
         if((carafe.getRemainGallon() + this.#remainGallon) < this.#volume){
             this.#remainGallon +=  carafe.getRemainGallon()
-            carafe.vider()
+            carafe.setRemainGallon(carafe.getRemainGallon()-carafe.getRemainGallon())   
         }else{
             this.#remainGallon += (this.#volume - gallonsR)
             carafe.setRemainGallon(carafe.getRemainGallon()-( this.#volume- gallonsR))
@@ -65,5 +76,6 @@ export default class Carafe{
         
         console.log(`le carafe ${this.#volume}G = ${this.#remainGallon}G restant`)
         console.log(`le carafe ${carafe.getVolume()}G = ${carafe.getRemainGallon()}G restant`)
+        return {type:"transvaser", carafe1:this, carafe2: carafe}  
     }
 }
