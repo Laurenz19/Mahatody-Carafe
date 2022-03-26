@@ -39,13 +39,18 @@ export default class Carafe{
     remplir(){
         this.#remainGallon = this.#volume
         console.log(`(Remplir)=> le Carafe ${this.#volume} est rempli`)
-        return {type:"remplir", carafe:this}  
+        let carafe = new Carafe(this.getVolume(), this.getClassName())
+        carafe.setRemainGallon(this.getRemainGallon())
+        return {type:"remplir", carafe:carafe}  
     }
 
     vider(){
         this.#remainGallon = 0
         console.log(`(Vider)=> le Carafe ${this.#volume} est vidé`)
-        return {type:"vider", carafe:this}  
+        let carafe = new Carafe(this.getVolume(), this.getClassName())
+        carafe.setRemainGallon(this.getRemainGallon())
+
+        return {type:"vider", carafe:carafe}  
     }
 
     estVide(){
@@ -76,6 +81,12 @@ export default class Carafe{
         
         console.log(`le carafe ${this.#volume}G = ${this.#remainGallon}G restant`)
         console.log(`le carafe ${carafe.getVolume()}G = ${carafe.getRemainGallon()}G restant`)
-        return {type:"transvaser", carafe1:this, carafe2: carafe}  
+        
+        let carafe1 = new Carafe(this.getVolume(), this.getClassName())
+        carafe1.setRemainGallon(this.getRemainGallon())
+
+        let carafe2 = new Carafe(carafe.getVolume(), carafe.getClassName())
+        carafe2.setRemainGallon(carafe.getRemainGallon())
+        return {type:"transvaser", carafe1:carafe1, carafe2: carafe2}  
     }
 }

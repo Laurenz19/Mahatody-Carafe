@@ -13,6 +13,8 @@
     margin: 5px;
 }
 
+
+
 .plein{
     background-color: rgba(19, 240, 240, 0.5);
 }
@@ -33,26 +35,26 @@
         transform: translateY(-90px);
     }
     75%{
-        transform: translateY(-100px);
+        transform: translateY(-125px);
     }
     85%{
-        transform: translateY(-125px) rotate(-50deg);
+        transform: translateY(-150px) rotate(-50deg);
     }
     100%{
-        transform: translateY(-125px) rotate(-100deg) translateX(50px);
+        transform: translateY(-175px) rotate(-100deg) translateX(50px);
         
     }
 }
 
 @keyframes transvaser-out {
     0%{
-        transform: translateY(-125px) rotate(-100deg) translateX(50px);
+        transform: translateY(-175px) rotate(-100deg) translateX(50px);
     }
     25%{
-        transform: translateY(-125px) rotate(-50deg);
+        transform: translateY(-150px) rotate(-50deg);
     }
     75%{
-        transform: translateY(-100px);
+        transform: translateY(-125px);
     }
     85%{
         transform: translateY(-90px);
@@ -100,5 +102,12 @@
         
     }
 } */
+
+header{
+    text-align: center;
+    font-size: 25px;
+    font-family:Tahoma, Geneva, Verdana, sans-serif
+    
+}
 
 
