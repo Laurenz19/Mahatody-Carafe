@@ -23,7 +23,6 @@
            <input type="number" name="carafe2" id="carafe2" placeholder="Carafe N°2" min="0" max="10">
            <input type="number" name="gallons" id="gallons" placeholder="Nb Gallons" min="0" max="10">
            <button id="start">Lancer!</button>
-           <button id="stop">Stop</button>
            <button id="test">Test</button>
        </div>
        <div id="event">
@@ -33,10 +32,6 @@
                 a {{Carafe2_NbGallons}} Gallons. L'Objectif est d'obtenir {{nb}} Gallons dans la première Carafe.
             </script>
            </div>
-           <div class="actions">
-
-           </div>
-        
        </div>
         <div class="content">
             <div class="carafe carafe1">
@@ -46,11 +41,11 @@
                 
             </div>
         </div>
-    </main>
-    <footer>
-        Année universitaire 2020 - 2021
-    </footer>
-    
-    
+        <div class="actions">
+            <script id="template-action-info" type="text/template">
+               {{action_info}}
+            </script>
+        </div>
+    </main> 
 </body>
 </html>

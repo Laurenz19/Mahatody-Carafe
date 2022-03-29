@@ -1,6 +1,6 @@
 .content{
     width: 240px;
-    margin: 200px auto;
+    margin: 200px auto 10px;
     
 }
 .carafe{
@@ -107,7 +107,29 @@ header{
     text-align: center;
     font-size: 25px;
     font-family:Tahoma, Geneva, Verdana, sans-serif
-    
 }
+
+main{
+    width: 100%;
+}
+
+#setting{
+    width: 600px;
+    margin: 25px auto;
+}
+
+footer{
+    text-align: center;
+}
+
+/* div.info{
+    width: 50%;
+    margin: auto;
+    padding: 15px;
+    text-align: center;
+    height: 50px;
+    background-color:rgb(233, 233, 233);
+    border-radius: 3px;
+} */
 
 

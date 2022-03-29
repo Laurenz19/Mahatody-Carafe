@@ -5,11 +5,15 @@ let carafe1 = new Carafe(4, "");
 let carafe2 = new Carafe(3, "");
 let nb = 2;
 let event = new Event(carafe1, carafe2, nb)
-let gallonEnPixel= 50; 
+let gallonEnPixel= 40; 
 
 let event_info_template = $("#template-event-info")
 let event_info_temlate_html = event_info_template.html()
 let event_info = ""
+
+let action_info_template = $("#template-action-info")
+let action_info_template_html = action_info_template.html()
+let action_info = ""
 
 
 
@@ -54,7 +58,9 @@ function init(){
 
             renderAllInfo()
             event.start()
+            renderAction("En cours de préparation")
             check(event.getEventSplitted(), 0)
+           
         }
         
     }
@@ -68,7 +74,32 @@ function renderAllInfo(){
     .replace(/{{nb}}/g, event.getRemainGallonGoal()) 
 
     $(".info").html(event_info)
+    $(".info").css({
+        "width": "50%",
+        "margin": "auto",
+        "padding": "15px",
+        "text-align": "center",
+        "height": "50px",
+        "background-color":"rgb(233, 233, 233)",
+        "border-radius": "3px"
+    })
                                
+}
+
+function renderAction(message){
+    console.log("action", message)
+    action_info = ""
+    action_info += action_info_template_html.replace(/{{action_info}}/g, message)
+    $(".actions").html(action_info)
+    $(".actions").css({
+        "width": "50%",
+        "margin": "auto",
+        "padding": "15px",
+        "text-align": "center",
+        "height": "50px",
+        "background-color":"rgb(233, 233, 233)",
+        "border-radius": "3px"
+    })
 }
 
 function transvaser(carafe1, carafe2){
@@ -76,9 +107,9 @@ function transvaser(carafe1, carafe2){
     $(`.${carafe2.getClassName()}`).removeClass("transvaser-out")
     $(`.${carafe2.getClassName()}`).addClass("transvaser-in")
     console.log(carafe2.getRemainGallon())
+    renderAction(`Transvaser le carafe avec ${carafe2.getVolume()}G dans le carafe avec ${carafe1.getVolume()}G`)
     setTimeout(()=>{
         console.log("height",$(`.${carafe2.getClassName()}`).find("div").height())
-    
        let val = gallonEnPixel*carafe2.getRemainGallon()
        
         $(`.${carafe2.getClassName()}`).find("div").removeAttr()
@@ -106,12 +137,15 @@ function check(data, nb){
         }
 
         if(data[nb].type == "remplir"){
+            renderAction(`Remplir le carafe avec ${data[nb].carafe.getVolume()}G`)
+           
             console.log(2, data[nb].type)
             $(`.${data[nb].carafe.getClassName()}`).find("div").removeAttr()
             $(`.${data[nb].carafe.getClassName()}`).find("div").css({"height":`${$(`.${data[nb].carafe.getClassName()}`).height()}px`, "background-color":"rgba(19, 240, 240, 0.5)", "border-radius": "0 0 15px 15px", "position":"relative", "bottom":"0px"})  
         }
 
         if(data[nb].type == "vider"){
+            renderAction(`Vider le carafe avec ${data[nb].carafe.getVolume()}G`)
             console.log(3, data[nb].type)
             $(`.${data[nb].carafe.getClassName()}`).find("div").css({"height":"0px", "background-color":"white", "border-radius": "0 0 15px 15px"})
         }
@@ -119,15 +153,20 @@ function check(data, nb){
         nb++
         if(nb<data.length){
             check(data, nb)
+        }else {
+            setTimeout(()=>{
+                renderAction("Fin de l'opération")
+             }, 3000) 
         }
     }, 3000)
+
     console.log(temps)
 }
 
 
 
 $("#test").on("click", ()=>{
-    transvaser()
+    renderAction("En cours de préparation")
 })
 
 
