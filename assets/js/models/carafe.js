@@ -36,6 +36,10 @@ export default class Carafe{
         this.#className = className
     }
 
+    clone(){
+        return new Carafe()
+    }
+
     remplir(){
         this.#remainGallon = this.#volume
         console.log(`(Remplir)=> le Carafe ${this.#volume} est rempli`)
@@ -87,6 +91,12 @@ export default class Carafe{
 
         let carafe2 = new Carafe(carafe.getVolume(), carafe.getClassName())
         carafe2.setRemainGallon(carafe.getRemainGallon())
-        return {type:"transvaser", carafe1:carafe1, carafe2: carafe2}  
+
+       /*  if(carafe1.getVolume()>carafe2.getVolume()){
+            return {type:"transvaser", carafe1:carafe1, carafe2: carafe2, classRef: carafe.getClassName()} 
+        }else return {type:"transvaser", carafe1:carafe2, carafe2: carafe1, classRef: carafe.getClassName()}  */
+
+        return {type:"transvaser", carafe1:carafe1, carafe2: carafe2, classRef: carafe.getClassName()} 
+   
     }
 }

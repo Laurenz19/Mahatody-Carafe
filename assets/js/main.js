@@ -31,13 +31,20 @@ function init(){
         if(gallons > Gallon_Carafe1){
             console.log("Le nombre de Gallons à abtenir dans le carafe 1 est supérieur par rapport à son volume maximal")
             alert("Le nombre de Gallons à abtenir dans le carafe 1 est supérieur par rapport à son volume maximal")
-        }else if(Gallon_Carafe1 == Gallon_Carafe2){
+        }/* else if(Gallon_Carafe1 == Gallon_Carafe2){
             console.log("Veuillez entrez deux carafes avec gallons différents")
             alert("Veuillez entrez deux carafes avec gallons différents")
-        }else{
+        } */else{
+        
             console.log(Gallon_Carafe1, Gallon_Carafe2, gallons)
             
-            carafe1 = new Carafe(Gallon_Carafe1, `${Gallon_Carafe1}Gallons`)
+            if(Gallon_Carafe1 == Gallon_Carafe2){
+                carafe1 = new Carafe(Gallon_Carafe1, `${Gallon_Carafe1}Gallonsa`)
+                carafe2 = new Carafe(Gallon_Carafe2, `${Gallon_Carafe2}Gallonsb`)
+            }else{
+                carafe1 = new Carafe(Gallon_Carafe1, `${Gallon_Carafe1}Gallons`)
+                carafe2 = new Carafe(Gallon_Carafe2, `${Gallon_Carafe2}Gallons`)
+            }
             $('.carafe1').addClass(carafe1.getClassName())
             $('.carafe1').html("")
             $('.carafe1').css({"height":`${gallonEnPixel*carafe1.getVolume()}`})
@@ -45,7 +52,7 @@ function init(){
            
             
             
-            carafe2 = new Carafe(Gallon_Carafe2, `${Gallon_Carafe2}Gallons`)
+           
             $('.carafe2').addClass(carafe2.getClassName())
             $('.carafe2').html("")
             $('.carafe2').css({"height":`${gallonEnPixel*carafe2.getVolume()}`})
@@ -55,12 +62,26 @@ function init(){
             nb = gallons
                     
             event = new Event(carafe1, carafe2, nb)
-
-            renderAllInfo()
-            event.start()
-            renderAction("En cours de préparation")
-            check(event.getEventSplitted(), 0)
            
+           /*  if(carafe1.getVolume()%carafe2.getVolume()==0){
+                renderAction("Opération impossible")
+            }else{
+              
+                renderAllInfo()
+               event.start()
+                renderAction("En cours de préparation")
+                check(event.getEventSplitted(), 0)
+               
+           
+            } */
+            renderAllInfo()
+            event.start2()
+            renderAction("En cours de préparation")
+            if(event.getEventSplitted().length >0){
+                check(event.getEventSplitted(), 0)
+            }else renderAction("Opération impossible")
+            
+            
         }
         
     }
@@ -102,7 +123,7 @@ function renderAction(message){
     })
 }
 
-function transvaser(carafe1, carafe2){
+/* function transvaser(carafe1, carafe2){
     $(`.${carafe2.getClassName()}`).removeClass("transvaser-in")
     $(`.${carafe2.getClassName()}`).removeClass("transvaser-out")
     $(`.${carafe2.getClassName()}`).addClass("transvaser-in")
@@ -125,6 +146,78 @@ function transvaser(carafe1, carafe2){
         $(`.${carafe1.getClassName()}`).find("div").removeAttr()
         $(`.${carafe1.getClassName()}`).find("div").css({"height":`${val}px`, "background-color":"rgba(19, 240, 240, 0.5)", "border-radius": "0 0 15px 15px", "position":"relative", "bottom":`-${$(`.${carafe1.getClassName()}`).height()-val}px`})
     }, 2100)
+} */
+
+function transvaser(data){
+    let carafe = getCarafeRef(data); //Carafe à transvaser
+    let _carafe = getCarafeNotRef(data)
+
+    let classList = $(`.${carafe.getClassName()}`).attr("class").split(/\s+/);
+    let right = true
+
+    classList.forEach(class_name => {
+          if(class_name == "carafe1"){
+              right = false
+          }  
+    });
+
+    if(right){
+        $(`.${carafe.getClassName()}`).removeClass("transvaser-in")
+        $(`.${carafe.getClassName()}`).removeClass("transvaser-out")
+        $(`.${carafe.getClassName()}`).addClass("transvaser-in")
+       
+    }else{
+        $(`.${carafe.getClassName()}`).removeClass("leftTransvaser-in")
+        $(`.${carafe.getClassName()}`).removeClass("leftTransvaser-out")
+        $(`.${carafe.getClassName()}`).addClass("leftTransvaser-in")
+        
+    }
+    renderAction(`Transvaser le carafe avec ${carafe.getVolume()}G dans le carafe avec ${_carafe.getVolume()}G`)
+
+
+   
+    setTimeout(()=>{
+        console.log("height",$(`.${carafe.getClassName()}`).find("div").height())
+       let val = gallonEnPixel*carafe.getRemainGallon()
+       
+        $(`.${carafe.getClassName()}`).find("div").removeAttr()
+       
+        $(`.${carafe.getClassName()}`).find("div").css({"height":`${val}px`, "background-color":"rgba(19, 240, 240, 0.5)", "border-radius": "0 0 15px 15px", "position":"relative", "bottom":`-${$(`.${carafe.getClassName()}`).height()-val}px`})
+        
+        if(right){
+            $(`.${carafe.getClassName()}`).addClass("transvaser-out")
+        }else{
+            $(`.${carafe.getClassName()}`).addClass("leftTransvaser-out")
+        }
+        
+    }, 2000) 
+
+    setTimeout(()=>{
+    
+       let val = gallonEnPixel*_carafe.getRemainGallon()
+        $(`.${_carafe.getClassName()}`).find("div").removeAttr()
+        $(`.${_carafe.getClassName()}`).find("div").css({"height":`${val}px`, "background-color":"rgba(19, 240, 240, 0.5)", "border-radius": "0 0 15px 15px", "position":"relative", "bottom":`-${$(`.${_carafe.getClassName()}`).height()-val}px`})
+    }, 2100)
+}
+
+function getCarafeNotRef(data){
+    if(data.carafe1.getClassName() != data.classRef){
+        return data.carafe1
+    }
+
+    if(data.carafe2.getClassName() != data.classRef){
+        return data.carafe2
+    }
+}
+
+function getCarafeRef(data){
+    if(data.carafe1.getClassName() == data.classRef){
+        return data.carafe1
+    }
+
+    if(data.carafe2.getClassName() == data.classRef){
+        return data.carafe2
+    }
 }
 
 function check(data, nb){
@@ -133,7 +226,8 @@ function check(data, nb){
         if(data[nb].type == "transvaser"){
             
             console.log(1, data[nb].type)
-            transvaser(data[nb].carafe1, data[nb].carafe2)
+           /*  transvaser(data[nb].carafe1, data[nb].carafe2) */
+           transvaser(data[nb])
         }
 
         if(data[nb].type == "remplir"){
